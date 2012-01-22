@@ -1,0 +1,15 @@
+{
+    "name": "Read It Now",
+    "version": "0.12",
+    "description": "Google Reader + Read it Later = Crazy Delicious.",
+    "options_page": "options.html",
+    "permissions": [
+                    "https://readitlaterlist.com/",
+                    "https://*.google.com"
+                   ],
+  "app": {
+      "launch": {
+          "local_path": "index.html"
+      }
+  }
+}

@@ -1,0 +1,78 @@
+<html>
+<head><title>Read it Now Options</title></head>
+<script type="text/javascript">
+
+// Saves options to localStorage.
+function save_options() {
+  var select = document.getElementById("count");
+  var count = select.children[select.selectedIndex].value;
+  localStorage["count"] = count;
+
+  var username = document.getElementById("username").value;
+  localStorage["username"] = username;
+
+  var username = document.getElementById("password").value;
+  localStorage["password"] = username;
+
+  // Update status to let user know options were saved.
+  var status = document.getElementById("status");
+  status.innerHTML = "Options Saved.";
+  setTimeout(function() {
+    status.innerHTML = "";
+  }, 1500);
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+    
+    var count = localStorage["count"];
+    if (count) {
+        var select = document.getElementById("count");
+        for (var i = 0; i < select.children.length; i++) {
+            var child = select.children[i];
+            if (child.value == count) {
+                child.selected = "true";
+                break;
+            }
+        }
+    }
+
+    var username = localStorage["username"];
+    if (username) {
+        var doc = document.getElementById("username");
+        doc.value = username;
+    }
+
+    var password = localStorage["password"];
+    if (password) {
+        var doc = document.getElementById("password");
+        doc.value = password;
+    }
+
+}
+
+</script>
+
+<body onload="restore_options()">
+    
+Articles to List:
+<select id="count">
+ <option value="25">25</option>
+ <option value="50">50</option>
+ <option value="100">100</option>
+ <option value="250">250</option>
+</select>
+<br />
+
+Username: <INPUT TYPE=TEXT id="username">
+<br />
+
+Username: <INPUT TYPE=PASSWORD id="password">
+<br />
+
+<button onclick="save_options()">Save</button>
+<br />
+<div id=status></div>
+
+</body>
+</html>
