@@ -2,26 +2,15 @@
 <SCRIPT TYPE="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </HEAD>
 <BODY>
-<div class="loginForm" style="float:left;">
-<FORM ID="login">
-Username:
-<INPUT NAME=user TYPE=TEXT VALUE=wdr1test>
-<BR />
 
-Password:
-<INPUT NAME=password TYPE=TEXT VALUE=testtest>
-<BR />
-
-<INPUT TYPE=button onclick="login()" value="Login" />
-</FORM>
+<DIV id="needToLogin">
+Please visit the <A HREF="options.html">options</A> page to enter your login.
 </DIV>
 
 
 <IFRAME NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
 
 
-<A HREF="">Reload</A><BR />
-<A HREF="#" onclick="alert(localStorage['password'])">count</A>    
 <div class="unreadList"> </div>
 <div class="spacer" style="width:20%;float:left;">
 
@@ -32,13 +21,32 @@ Password:
 <SCRIPT type="text/javascript">
 
 api_key = "3a9p4Q74Afnu9x6f53gePqNm6ddeac82";
-base_url = "https://readitlaterlist.com/v2/get?state=unread&count=10" +
-  "&apikey=" + api_key;
+
+$(document).ready(function() {
+    username = localStorage["username"];
+    password = localStorage["password"];
+    count = localStorage["count"];
+    
+    if (!username || !password) {
+        return;
+    }
+    $("#needToLogin").hide();
+
+    if (!count) {
+        count = 25;
+    }
+    
+    var url = "https://readitlaterlist.com/v2/get?state=unread&" +
+        "&apikey=" + api_key + "&count=" + count + 
+        "&username=" + username + "&password=" + password;
+
+    $.getJSON(url, renderLinks);
+});
 
 function markAsRead(url) {
     console.log("markAsRead");
     read_url = "https://readitlaterlist.com/v2/send?" +
-        "&username=" + user +
+        "&username=" + username +
         "&password=" + password + 
         "&apikey=" + api_key +
         '&read={"0":{"url":"' + url + '"}}';
@@ -48,7 +56,6 @@ function markAsRead(url) {
 
 
 function renderLinks(data) {
-    $(".loginForm").hide();
     links = data.list;
     $("div.unreadList").append("<UL>");
     for (var key in links) {
@@ -69,10 +76,10 @@ function renderLinks(data) {
 
 function login() {
     console.log("login");
-    user = document.forms["login"]["user"].value;
-    password = document.forms["login"]["password"].value;
+    // user = document.forms["login"]["user"].value;
+    // password = document.forms["login"]["password"].value;
 
-    url = base_url + "&username=" + user + "&password=" + password;
+    url = base_url + "&username=" + username + "&password=" + password;
     console.log(url);
 
     $.getJSON(url, renderLinks);
