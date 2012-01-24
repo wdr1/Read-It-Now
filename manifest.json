@@ -4,7 +4,7 @@
     "description": "Google Reader-esque interface for Read It Later.",
     "options_page": "options.html",
     "permissions": [
-                    "https://readitlaterlist.com/",
+                    "https://readitlaterlist.com/"
                    ],
   "app": {
       "launch": {
