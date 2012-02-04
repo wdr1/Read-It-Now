@@ -1,6 +1,6 @@
 {
     "name": "Read It Now",
-    "version": "0.20",
+    "version": "0.30",
     "description": "Google Reader-esque interface for Read It Later.",
     "options_page": "options.html",
     "permissions": [
