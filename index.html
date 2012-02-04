@@ -8,7 +8,7 @@ Please visit the <A HREF="options.html">options</A> page to enter your login.
 </DIV>
 
 
-<IFRAME ID="content" NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
+<IFRAME CLASS="content" ID="content" NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
 
 
 <div class="unreadList"> </div>
@@ -69,19 +69,11 @@ function renderLinks(data) {
     }
     $("div.unreadList").append("</UL>");
 
-    // Mark as Read
+    // Mark as read hook
     $('.markread').click(function() {
         $(this).closest("li").remove();
     });
 
-    // Resize the frame
-    $('.contentLink').click(function() {
-        console.log("resizing");
-        f = document.getElementById('content');
-        f.style.height = f.contentWindow.document.body.scrollHeight + "px";
-    });
-
-    // Resize the child frame based upon height of link index
 }
 
 
