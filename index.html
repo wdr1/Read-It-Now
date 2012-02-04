@@ -8,7 +8,7 @@ Please visit the <A HREF="options.html">options</A> page to enter your login.
 </DIV>
 
 
-<IFRAME NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
+<IFRAME ID="content" NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
 
 
 <div class="unreadList"> </div>
@@ -56,20 +56,34 @@ function markAsRead(url) {
 function renderLinks(data) {
     links = data.list;
     $("div.unreadList").append("<UL>");
+    c = 0;
     for (var key in links) {
-        link = "<LI> <A HREF='" + links[key].url + "' target=content>" + 
+        link = "<LI> <A HREF='" + links[key].url +
+            "' class=contentLink target=content>" + 
             links[key].title + "</A> " +
-            '[<A HREF="#" id="markread" onclick=markAsRead("' +
+            '[<A HREF="#" class="markread" id=n' + c++ + 
+            ' onclick=markAsRead("' +
             links[key].url + '")>R</A>]' + "<BR />";
-
+        
         $("div.unreadList").append(link);
     }
     $("div.unreadList").append("</UL>");
 
-    $('#markread').click(function() {
+    // Mark as Read
+    $('.markread').click(function() {
         $(this).closest("li").remove();
     });
+
+    // Resize the frame
+    $('.contentLink').click(function() {
+        console.log("resizing");
+        f = document.getElementById('content');
+        f.style.height = f.contentWindow.document.body.scrollHeight + "px";
+    });
+
+    // Resize the child frame based upon height of link index
 }
+
 
 
 </SCRIPT>
