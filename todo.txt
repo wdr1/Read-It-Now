@@ -1,0 +1,6 @@
+- bug: can't mark read urls w/ a query string
+- some sort of icon to mark read
+- sort articles by most recent
+- pretty up the left hand size
+- dynamically resize the iframe
+- make the sign-in flow simpler
