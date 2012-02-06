@@ -44,11 +44,16 @@ $(document).ready(function() {
 });
 
 function markAsRead(url) {
+    url = escape(url);
+    url = url.replace(/\+/g, "%2B");
+    
     read_url = "https://readitlaterlist.com/v2/send?" +
         "&username=" + username +
         "&password=" + password + 
         "&apikey=" + api_key +
         '&read={"0":{"url":"' + url + '"}}';
+
+    console.log(read_url);
     $.get(read_url);
 }
 
