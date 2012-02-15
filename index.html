@@ -74,10 +74,7 @@ function renderLinks(data) {
             links[key].title + "</A> " +
             '<A HREF="#" class="markread" id=n' + c++ + 
             ' onclick=markAsRead("' + links[key].url + '")>' +
-            '<IMG HEIGHT=15 WIDTH=15 SRC="white.png"></A>' + "<BR />";
-
-        console.log(link);
-
+            '<IMG HEIGHT=10 WIDTH=10 SRC="white.png"></A>' + "<BR />";
         
         $("div.unreadList").append(link);
     }
