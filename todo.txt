@@ -1,4 +1,3 @@
-- some sort of icon to mark read
 - sort articles by most recent
 - pretty up the left hand size
 - dynamically resize the iframe
