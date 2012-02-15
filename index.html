@@ -17,7 +17,6 @@ Please visit the <A HREF="options.html">options</A> page to enter your login.
 </div>
 
 
-
 <SCRIPT type="text/javascript">
 
 api_key = "3a9p4Q74Afnu9x6f53gePqNm6ddeac82";
@@ -69,6 +68,16 @@ function renderLinks(data) {
             '[<A HREF="#" class="markread" id=n' + c++ + 
             ' onclick=markAsRead("' +
             links[key].url + '")>R</A>]' + "<BR />";
+
+        link = "<LI> <A HREF='" + links[key].url +
+            "' class=contentLink target=content>" + 
+            links[key].title + "</A> " +
+            '<A HREF="#" class="markread" id=n' + c++ + 
+            ' onclick=markAsRead("' + links[key].url + '")>' +
+            '<IMG HEIGHT=15 WIDTH=15 SRC="white.png"></A>' + "<BR />";
+
+        console.log(link);
+
         
         $("div.unreadList").append(link);
     }

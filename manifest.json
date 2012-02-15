@@ -3,6 +3,7 @@
     "version": "0.90",
     "description": "Google Reader-esque interface for Read It Later.",
     "options_page": "options.html",
+    "icons": { "128" : "rin.png" },
     "permissions": [
                     "https://readitlaterlist.com/"
                    ],
