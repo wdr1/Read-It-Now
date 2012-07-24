@@ -11,33 +11,36 @@ Please visit the <A HREF="options.html">options</A> page to enter your login.
 <IFRAME CLASS="content" ID="content" NAME="content" ALIGN=RIGHT WIDTH="80%" HEIGHT="100%" SRC="starting.html"></iframe>
 
 
-<div class="unreadList"> </div>
-<div class="spacer" style="width:20%;float:left;">
+<div class="unreadList"> Loading... </div>
+<div class="spacer" style="width:20%;float:left;"></div>
 
+<div class="paging">
+<P ALIGN="CENTER">
+<A HREF="javascript:previous()">&lt;&lt;&lt;</A>
+<A HREF="javascript:next()">&gt;&gt;&gt;</A>
+</P>
 </div>
-
 
 <SCRIPT type="text/javascript">
 
-api_key = "3a9p4Q74Afnu9x6f53gePqNm6ddeac82";
+var page = 0;
+var api_key = "3a9p4Q74Afnu9x6f53gePqNm6ddeac82";
+var links = [];
+var totalLinkCount = 0;
 
 $(document).ready(function() {
     username = localStorage["username"];
     password = localStorage["password"];
-    count = localStorage["count"];
     
     if (!username || !password) {
         return;
     }
     $("#needToLogin").hide();
 
-    if (!count) {
-        count = 25;
-    }
-    
     var url = "https://readitlaterlist.com/v2/get?state=unread&" +
-        "&apikey=" + api_key + "&count=" + count + 
+        "&apikey=" + api_key +
         "&username=" + username + "&password=" + password;
+    console.log(url);
 
     $.getJSON(url, renderLinks);
 });
@@ -48,7 +51,7 @@ function markAsRead(url) {
     
     read_url = "https://readitlaterlist.com/v2/send?" +
         "&username=" + username +
-        "&password=" + password + 
+        "&password=" + password +
         "&apikey=" + api_key +
         '&read={"0":{"url":"' + url + '"}}';
 
@@ -58,10 +61,41 @@ function markAsRead(url) {
 
 
 function renderLinks(data) {
-    links = data.list;
+    if (data) {
+        console.log("Setting links...");
+        links = data.list;
+    }
+    
+    for (i in links)
+        totalLinkCount++
+
+    $("div.unreadList").html("<P></P>");
     $("div.unreadList").append("<UL>");
+
+    // Determine link range
+    linksPerPage = localStorage["count"];
+    if (!linksPerPage)
+        linksPerPage = 25;
+    startingLinkCount = page * linksPerPage;
+    if (startingLinkCount > totalLinkCount)
+        startingLinkCount = totalLinkCount - 1;
+    endingLinkCount = (page + 1) * linksPerPage - 1;
+    if (endingLinkCount > totalLinkCount)
+        endingLinkCount = totalLinkCount - 1;
+    console.log(startingLinkCount + " .. " + endingLinkCount);
+
+    // This would be easier if the Pocket API gave a list
     c = 0;
-    for (var key in links) {
+    currentLinkCount = 1;
+    for (key in links) {
+        currentLinkCount++
+        if (currentLinkCount < startingLinkCount) {
+            continue;
+        }
+        if (currentLinkCount > endingLinkCount) {
+            break;
+        }
+        
         link = "<LI> <A HREF='" + links[key].url +
             "' class=contentLink target=content>" + 
             links[key].title + "</A> " +
@@ -84,10 +118,21 @@ function renderLinks(data) {
     $('.markread').click(function() {
         $(this).closest("li").remove();
     });
-
 }
 
+function next() {
+    if (page < (totalLinkCount / linksPerPage)) {
+        page++;
+    }
+    renderLinks();
+}
 
+function previous() {
+    if (page > 0) {
+        page--;
+    }
+    renderLinks();
+}
 
 </SCRIPT>
 </BODY>
